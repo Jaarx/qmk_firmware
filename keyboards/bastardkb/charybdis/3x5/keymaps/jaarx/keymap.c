@@ -72,6 +72,11 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define ______________HOME_ROW_GACS_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX
 #define ______________HOME_ROW_GACS_R______________ XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI
 
+#define SNIPREV POINTER_SNIPING_DPI_REVERSE
+#define SNIPFOR POINTER_SNIPING_DPI_FORWARD
+#define DPI_REV POINTER_DEFAULT_DPI_REVERSE
+#define DPI_FOR POINTER_DEFAULT_DPI_FORWARD
+
 /*
  * Layers used on the Charybdis Nano.
  *
@@ -83,9 +88,9 @@ static uint16_t auto_pointer_layer_timer = 0;
  */
 
 #define LAYOUT_LAYER_POINTER                                                                  \
-    XXXXXXX, POINTER_SNIPING_DPI_REVERSE, POINTER_SNIPING_DPI_FORWARD, POINTER_DEFAULT_DPI_REVERSE, POINTER_DEFAULT_DPI_FORWARD, XXXXXXX,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
+    XXXXXXX, SNIPREV, SNIPFOR, DPI_REV, DPI_FOR, EE_CLR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
     ______________HOME_ROW_GACS_L______________, XXXXXXX,   KC_LEFT,   KC_UP,   KC_DOWN,  KC_RGHT, \
-    XXXXXXX, DRGSCRL, SNIPING, EE_CLR, QK_BOOT, KC_BTN4,   KC_BTN1,   KC_BTN2,   KC_BTN3,  KC_BTN5, \
+    XXXXXXX, DRGSCRL, SNIPING, PM_MO(PM_CARET), QK_BOOT, KC_BTN4,   KC_BTN1,   KC_BTN2,   KC_BTN3,  KC_BTN5, \
                       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 #define LAYOUT_LAYER_RSYMBOL                                                                  \
@@ -102,7 +107,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 
 #define LAYOUT_LAYER_NAV                                                                  \
     _______________DEAD_HALF_ROW_______________, KC_VOLU,   KC_MRWD,   KC_MPLY,   KC_MFFD,  XXXXXXX, \
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_VOLD,   LGUI_T(KC_LEFT),   LGUI_T(KC_UP),   LGUI_T(KC_DOWN),  LGUI_T(KC_RGHT), \
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_VOLD,   LAG(KC_LEFT),   LAG(KC_UP),   LAG(KC_DOWN),  LAG(KC_RGHT), \
     _______________DEAD_HALF_ROW_______________, KC_MUTE,   XXXXXXX,   XXXXXXX,   XXXXXXX,  XXXXXXX, \
                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
