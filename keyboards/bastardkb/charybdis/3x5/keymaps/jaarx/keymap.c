@@ -89,7 +89,7 @@ static uint16_t auto_pointer_layer_timer = 0;
                       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 #define LAYOUT_LAYER_RSYMBOL                                                                  \
-    _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_PLUS,   KC_MINS,   KC_ASTR,  LT(2, KC_QUOT), \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_PLUS,   KC_MINS,   KC_ASTR,  KC_QUOT, \
     ______________HOME_ROW_GACS_L______________, KC_GRV,   KC_EQL,   KC_UNDS,   KC_LT,  KC_GT, \
     _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_AMPR,   KC_PIPE,   KC_EXLM,  KC_BSLS, \
                       XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX
