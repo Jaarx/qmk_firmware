@@ -72,9 +72,9 @@ enum charybdis_keymap_layers {
  */
 
 #define LAYOUT_LAYER_POINTER                                                                  \
-    XXXXXXX, SNIPREV, SNIPFOR, DPI_REV, DPI_FOR,  EE_CLR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
+    QK_BOOT, SNIPREV, SNIPFOR, DPI_REV, DPI_FOR,  EE_CLR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
     ______________HOME_ROW_GACS_L______________, XXXXXXX, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, \
-    XXXXXXX, DRGSCRL, SNIPING, CRTSCRL, QK_BOOT, KC_BTN4, KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN5, \
+    XXXXXXX, DRGSCRL, SNIPING, CRTSCRL, XXXXXXX, KC_BTN4, KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN5, \
                       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 #define LAYOUT_LAYER_RSYMBOL                                                                  \
@@ -90,7 +90,7 @@ enum charybdis_keymap_layers {
                       XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX
 
 #define LAYOUT_LAYER_NAV                                                                  \
-    _______________DEAD_HALF_ROW_______________, KC_VOLU,   KC_MRWD,   KC_MPLY,   KC_MFFD,  LSG(KC_5), \
+    _______________DEAD_HALF_ROW_______________, KC_VOLU,   KC_MRWD,   KC_MPLY,   KC_MFFD,LSG(KC_5), \
     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_VOLD,   KC_LEFT,     KC_UP,   KC_DOWN,  KC_RGHT, \
     _______________DEAD_HALF_ROW_______________, KC_MUTE,   XXXXXXX,   XXXXXXX,   XXXXXXX,  XXXXXXX, \
                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
