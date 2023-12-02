@@ -17,10 +17,6 @@
 #include QMK_KEYBOARD_H
 #include "features/achordion.h"
 
-#ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-#    include "timer.h"
-#endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-
 enum charybdis_keymap_layers {
     LAYER_BASE = 0,
     LAYER_POINTER,
@@ -31,21 +27,7 @@ enum charybdis_keymap_layers {
     LAYER_LSYMBOL
 };
 
-// Automatically enable sniping-mode on the pointer layer.
-#define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
-
-#ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-static uint16_t auto_pointer_layer_timer = 0;
-
-#    ifndef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
-#        define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS 1000
-#    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS
-
-#    ifndef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
-#        define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD 8
-#    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD
-#endif     // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-
+/** Thumb-layer switchers */
 #define BSPC_RSYMBOL LT(LAYER_RSYMBOL, KC_BSPC)
 #define TAB_RNUM LT(LAYER_RNUM, KC_TAB)
 #define ENT_LFUNC LT(LAYER_LFUNC, KC_ENT)
@@ -77,6 +59,8 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define DPI_REV POINTER_DEFAULT_DPI_REVERSE
 #define DPI_FOR POINTER_DEFAULT_DPI_FORWARD
 
+#define CRTSCRL PM_MO(PM_CARET)
+
 /*
  * Layers used on the Charybdis Nano.
  *
@@ -88,40 +72,40 @@ static uint16_t auto_pointer_layer_timer = 0;
  */
 
 #define LAYOUT_LAYER_POINTER                                                                  \
-    XXXXXXX, SNIPREV, SNIPFOR, DPI_REV, DPI_FOR, EE_CLR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
-    ______________HOME_ROW_GACS_L______________, XXXXXXX,   KC_LEFT,   KC_UP,   KC_DOWN,  KC_RGHT, \
-    XXXXXXX, DRGSCRL, SNIPING, PM_MO(PM_CARET), QK_BOOT, KC_BTN4,   KC_BTN1,   KC_BTN2,   KC_BTN3,  KC_BTN5, \
+    XXXXXXX, SNIPREV, SNIPFOR, DPI_REV, DPI_FOR,  EE_CLR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
+    ______________HOME_ROW_GACS_L______________, XXXXXXX, KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, \
+    XXXXXXX, DRGSCRL, SNIPING, CRTSCRL, QK_BOOT, KC_BTN4, KC_BTN1, KC_BTN2, KC_BTN3, KC_BTN5, \
                       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
 #define LAYOUT_LAYER_RSYMBOL                                                                  \
-    _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_PLUS,   KC_MINS,   KC_ASTR,  KC_QUOT, \
-    ______________HOME_ROW_GACS_L______________, KC_GRV,   KC_EQL,   KC_UNDS,   KC_LT,  KC_GT, \
-    _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_AMPR,   KC_PIPE,   KC_EXLM,  KC_BSLS, \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX, KC_PLUS, KC_MINS, KC_ASTR, KC_QUOT, \
+    ______________HOME_ROW_GACS_L______________, KC_GRV,   KC_EQL, KC_UNDS,   KC_LT,   KC_GT, \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX, KC_AMPR, KC_PIPE, KC_EXLM, KC_BSLS, \
                       XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX
 
-#define LAYOUT_LAYER_RNUM                                                                  \
-    _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_7,   KC_8,   KC_9,  KC_BSPC, \
-    ______________HOME_ROW_GACS_L______________, XXXXXXX,   KC_4,   KC_5,   KC_6,  KC_0, \
-    _______________DEAD_HALF_ROW_______________, XXXXXXX,   KC_1,   KC_2,   KC_3,  XXXXXXX, \
+#define LAYOUT_LAYER_RNUM                                                                     \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX,    KC_7,    KC_8,    KC_9, KC_BSPC, \
+    ______________HOME_ROW_GACS_L______________, XXXXXXX,    KC_4,    KC_5,    KC_6,    KC_0, \
+    _______________DEAD_HALF_ROW_______________, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, \
                       XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX
 
 #define LAYOUT_LAYER_NAV                                                                  \
-    _______________DEAD_HALF_ROW_______________, KC_VOLU,   KC_MRWD,   KC_MPLY,   KC_MFFD,  XXXXXXX, \
-    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_VOLD,   LAG(KC_LEFT),   LAG(KC_UP),   LAG(KC_DOWN),  LAG(KC_RGHT), \
+    _______________DEAD_HALF_ROW_______________, KC_VOLU,   KC_MRWD,   KC_MPLY,   KC_MFFD,  LSG(KC_5), \
+    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_VOLD,   KC_LEFT,     KC_UP,   KC_DOWN,  KC_RGHT, \
     _______________DEAD_HALF_ROW_______________, KC_MUTE,   XXXXXXX,   XXXXXXX,   XXXXXXX,  XXXXXXX, \
                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 
-#define LAYOUT_LAYER_LFUNC                                                                  \
-    KC_F12,   KC_F7,   KC_F8,    KC_F9,  XXXXXXX, XXXXXXX, XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, \
-    KC_F11,   KC_F4,   KC_F5,    KC_F6,  XXXXXXX, ______________HOME_ROW_GACS_R______________, \
-    KC_F10,   KC_F1,   KC_F2,    KC_F3,  XXXXXXX, RGB_M_P, RGB_M_B, XXXXXXX, XXXXXXX, RGB_SPI, \
-                       XXXXXXX,    XXXXXXX, XXXXXXX, _______, XXXXXXX
+#define LAYOUT_LAYER_LFUNC                                                                   \
+     KC_F12,   KC_F7,   KC_F8,   KC_F9, XXXXXXX, RGB_MOD, XXXXXXX, RGB_HUI, RGB_SAI, RGB_VAI, \
+     KC_F11,   KC_F4,   KC_F5,   KC_F6, XXXXXXX, ______________HOME_ROW_GACS_R______________, \
+     KC_F10,   KC_F1,   KC_F2,   KC_F3, XXXXXXX, RGB_M_P, RGB_M_B, XXXXXXX, XXXXXXX, RGB_SPI, \
+                      XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX
 
 #define LAYOUT_LAYER_LSYMBOL                                                                  \
-    KC_TILD,    KC_AT,     KC_LCBR,    KC_RCBR, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
-    KC_HASH,    KC_DLR,    KC_LPRN,    KC_RPRN,  XXXXXXX, ______________HOME_ROW_GACS_R______________, \
-    KC_PERC,    KC_CIRC,   KC_LBRC,    KC_RBRC, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
-                          XXXXXXX, KC_DELETE, XXXXXXX, XXXXXXX, XXXXXXX
+    KC_TILD,   KC_AT, KC_LCBR, KC_RCBR, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
+    KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN, XXXXXXX, ______________HOME_ROW_GACS_R______________, \
+    KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
+                      XXXXXXX,  KC_DEL, XXXXXXX, XXXXXXX, XXXXXXX
 
 /**
  * \brief Add Home Row mod to a layout.
@@ -144,6 +128,17 @@ static uint16_t auto_pointer_layer_timer = 0;
       __VA_ARGS__
 #define HOME_ROW_MOD_GACS(...) _HOME_ROW_MOD_GACS(__VA_ARGS__)
 
+#define _NAV_LAYER_LAG(                                            \
+    L00, L01, L02, L03, L04, R05, R06, R07, R08, R09,                  \
+    L10, L11, L12, L13, L14, R15, R16, R17, R18, R19,                  \
+    ...)                                                               \
+             L00,         L01,         L02,         L03,         L04,  \
+             R05,         R06,         R07,         R08,         R09,  \
+             L10,         L11,         L12,         L13,         L14,  \
+             R15,     LAG(R16),   LAG(R17),    LAG(R18),    LAG(R19), \
+      __VA_ARGS__
+#define NAV_LAYER_LAG(...) _NAV_LAYER_LAG(__VA_ARGS__)
+
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -153,13 +148,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_POINTER] = LAYOUT_wrapper(LAYOUT_LAYER_POINTER),
   [LAYER_RSYMBOL] = LAYOUT_wrapper(LAYOUT_LAYER_RSYMBOL),
   [LAYER_RNUM] = LAYOUT_wrapper(LAYOUT_LAYER_RNUM),
-  [LAYER_NAV] = LAYOUT_wrapper(LAYOUT_LAYER_NAV),
+  [LAYER_NAV] = LAYOUT_wrapper(NAV_LAYER_LAG(LAYOUT_LAYER_NAV)),
   [LAYER_LFUNC] = LAYOUT_wrapper(LAYOUT_LAYER_LFUNC),
   [LAYER_LSYMBOL] = LAYOUT_wrapper(LAYOUT_LAYER_LSYMBOL),
 };
 // clang-format on
 
-#ifdef POINTING_DEVICE_ENABLE
 #    ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
@@ -185,14 +179,6 @@ void matrix_scan_user(void) {
     }
 }
 #    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-
-// #    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
-// layer_state_t layer_state_set_user(layer_state_t state) {
-//     charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
-//     return state;
-// }
-// #    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
-#endif     // POINTING_DEVICE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in
